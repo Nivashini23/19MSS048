@@ -7,29 +7,29 @@ const Trains = () => {
     const history = useHistory();
 
     const [trains, setTrains] = useState([
-        {
-            trainName: "Chennai Exp",
-            trainNumber: "2344",
-            departureTime: {
-                Hours: 21,
-                Minutes: 35,
-                Seconds: 0
+            {
+                trainName: "Chennai Exp",
+                trainNumber: "2344",
+                departureTime: {
+                    Hours: 21,
+                    Minutes: 35,
+                    Seconds: 0
+                },
+                seatsAvailable: {
+                    sleeper: 3,
+                    AC: 1
+                },
+                price: {
+                    sleeper: 2,
+                    AC: 5
+                },
+                delayedBy: 15
             },
-            seatsAvailable: {
-                sleeper: 3,
-                AC: 1
-            },
-            price: {
-                sleeper: 2,
-                AC: 5
-            },
-            delayedBy: 15
-        },
-        {
-            trainName: "Hyderabad Exp",
-            trainNumber: "2341",
-            departureTime: {
-                Hours: 23,
+            {
+                trainName: "Hyderabad Exp",
+                trainNumber: "2341",
+                departureTime: {
+                    Hours: 23,
                 Minutes: 55,
                 Seconds: 0
             },
@@ -42,8 +42,9 @@ const Trains = () => {
                 AC: 1854
             },
             delayedBy: 0
-        },
-    ]);
+        },
+    ]
+             );
     const register = async () => {
         try {
             const response = await fetch('http://104.211.219.98/train/register', {
@@ -119,11 +120,8 @@ const Trains = () => {
     }
 
     useEffect(() => {
-        // register()
-        // After register function runs, run the following getAuthToken() function and remove register() call from useEffect()
-        // getAuthToken()
-        // Once token is received, run the following method, getTrains()
-        // getTrains()
+        getAuthToken()
+        getTrains()
     }, [])
 
     return (
