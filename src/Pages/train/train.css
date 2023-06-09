@@ -1,0 +1,9 @@
+.trainCardNew {
+    background-color: #00B89F;
+    padding: 1.5rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px 0 #000;
+    transition: 0.2s;
+    color: white;
+}

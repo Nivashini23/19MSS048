@@ -1,10 +1,49 @@
 import { useEffect, useState } from 'react';
 import './trains.css';
-import { TrainCard } from 'components';
+import { useHistory } from 'react-router-dom';
+import { TrainCard } from 'comp';
 
 const Trains = () => {
-    const [trains, setTrains] = useState([]);
+    const history = useHistory();
 
+    const [trains, setTrains] = useState([
+        {
+            trainName: "Chennai Exp",
+            trainNumber: "2344",
+            departureTime: {
+                Hours: 21,
+                Minutes: 35,
+                Seconds: 0
+            },
+            seatsAvailable: {
+                sleeper: 3,
+                AC: 1
+            },
+            price: {
+                sleeper: 2,
+                AC: 5
+            },
+            delayedBy: 15
+        },
+        {
+            trainName: "Hyderabad Exp",
+            trainNumber: "2341",
+            departureTime: {
+                Hours: 23,
+                Minutes: 55,
+                Seconds: 0
+            },
+            seatsAvailable: {
+                sleeper: 6,
+                AC: 7
+            },
+            price: {
+                sleeper: 554,
+                AC: 1854
+            },
+            delayedBy: 0
+        },
+    ]);
     const register = async () => {
         try {
             const response = await fetch('http://104.211.219.98/train/register', {
@@ -42,58 +81,63 @@ const Trains = () => {
                 headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",
-  // "Authorization": `Bearer ${}`
-},
-body: JSON.stringify({
-    "companyName": "Train Central",
-    "clientId": localStorage.getItem('clientId'),
-    "ownerName": "S. Sri Nivashini",
-    "ownerEmail": "sriniraj2310@gmail.com",
-    "rollNo": "19MSS048",
-    "clientSecret": localStorage.getItem('clientSecret'),
-})
-});
-const {
-    access_token,
-} = await response.json();
-localStorage.setItem('access_token', access_token);
-} catch (error) {
-console.error(error)
-}
-}
-const getTrains = async () => {
-    try {
-        const response = await fetch('http://104.211.219.98/train/trains', {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                "Authorization": `Bearer ${localStorage.getItem('access_token')}`
-            }
-        });
-        const trains = await response.json();
-        setTrains(trains)
-    } catch (error) {
-        console.error(error)
-    }
-}
-useEffect(() => {
-    // register()
-    // After register function runs, run the following getAuthToken() function and remove register() call from useEffect()
-    // getAuthToken()
-    // Once token is received, run the following method, getTrains()
-    // getTrains()
-}, [])
-
-return (
-    <div>
-        {
-            trains?.map(({ trainName, trainNumber, departureTime, seatsAvailable, price, delayedBy }, index) => (
-                <TrainCard trainName={trainName} trainNumber={trainNumber} departureTime={departureTime} seatsAvailable={seatsAvailable} price={price} delayedBy={delayedBy}/>
-            ))
+                    // "Authorization": `Bearer ${}`
+                },
+                body: JSON.stringify({
+                    "companyName": localStorage.getItem('companyName'),
+                    "clientId": localStorage.getItem('clientId'),
+                    "ownerName": "S. Sri Nivashini",
+                    "ownerEmail": "sriniraj2310@gmail.com",
+                    "rollNo": "19MSS048",
+                    "clientSecret": localStorage.getItem('clientSecret'),
+                })
+            });
+            const {
+                access_token,
+            } = await response.json();
+            localStorage.setItem('access_token', access_token);
+        } catch (error) {
+            console.error(error)
         }
-    </div>
-)
+    }
+
+    const getTrains = async () => {
+        try {
+            const response = await fetch('http://104.211.219.98/train/trains', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Authorization": `Bearer ${localStorage.getItem('access_token')}`
+                }
+            });
+            const trains = await response.json();
+            setTrains(trains)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(() => {
+        // register()
+        // After register function runs, run the following getAuthToken() function and remove register() call from useEffect()
+        // getAuthToken()
+        // Once token is received, run the following method, getTrains()
+        // getTrains()
+    }, [])
+
+    return (
+        <div className='trains'>
+            <h1>{localStorage.getItem('companyName') || 'Train Central'} - Trains Schedule</h1>
+            <div className='trainsContent'>
+                {
+                    trains?.map(({ trainName, trainNumber, departureTime, seatsAvailable, price, delayedBy }, index) => (
+                        <TrainCard trainName={trainName} trainNumber={trainNumber} departureTime={departureTime} seatsAvailable={seatsAvailable} price={price} delayedBy={delayedBy} onClick={() => history.push(`/train/${trainNumber}`)} />
+                    ))
+                }
+            </div>
+        </div>
+    )
 }
 
-export default Trains
+export default Trains

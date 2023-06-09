@@ -1,0 +1,33 @@
+.trainCard {
+    background-color: #00B89F;
+    padding: 1.5rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px 0 #000;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.trainCard:hover {
+    transform: scale(1.10);
+    transition: 0.2s;
+}
+
+.trainCard:active {
+    transform: scale(0.90);
+    transition: 0.2s;
+}
+.trainCard * {
+    color: white !important;
+    font-size: 1.2rem;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.red {
+    color: red !important;
+}

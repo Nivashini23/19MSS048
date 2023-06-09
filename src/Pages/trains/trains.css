@@ -1,0 +1,10 @@
+.trains {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trainsContent {
+    display: flex;
+    align-items: center;
+}
